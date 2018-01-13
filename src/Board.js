@@ -62,14 +62,14 @@
     },
 
 
-/*
+    /*
          _             _     _
      ___| |_ __ _ _ __| |_  | |__   ___ _ __ ___ _
     / __| __/ _` | '__| __| | '_ \ / _ \ '__/ _ (_)
     \__ \ || (_| | |  | |_  | | | |  __/ | |  __/_
     |___/\__\__,_|_|   \__| |_| |_|\___|_|  \___(_)
 
- */
+  */
     /*=========================================================================
     =                 TODO: fill in these Helper Functions                    =
     =========================================================================*/
@@ -77,14 +77,44 @@
     // ROWS - run from left to right
     // --------------------------------------------------------------
     //
+
+    // iterate over the row
+    //  if value at index equals 1
+    //     return true
+    // return false
+
+
     // test if a specific row on this board contains a conflict
     hasRowConflictAt: function(rowIndex) {
-      return false; // fixme
+      //console.log('this is  hasRowConflictAt..... ');
+      var row = this.rows()[rowIndex];
+
+      for ( var i = 0; i < row.length; i++ ) {
+        if ( row[i] === 1 ) {
+          return true;
+        }
+      }
+      return false;
     },
+
+
+    // iterate through board rows
+    //   i refers to row index
+    //   if call of rowRowConfictAt is true for that index
+    //     return true
+    // return false
 
     // test if any rows on this board contain conflicts
     hasAnyRowConflicts: function() {
-      return false; // fixme
+      //console.log('this is  hasAnyRowConflicts..... ');
+      var rowsArray = this.rows();
+
+      for ( var i = 0; i < rowsArray.length; i++ ) {
+        if ( this.hasRowConflictAt(i) ) {
+          return true;
+        }
+      }
+      return false;
     },
 
 
@@ -94,12 +124,48 @@
     //
     // test if a specific column on this board contains a conflict
     hasColConflictAt: function(colIndex) {
-      return false; // fixme
+      // declare column array
+      // iterate over board to create col array
+      //   if value at index === 1
+      //   return true
+      // return false
+      var board = this.rows();
+      console.log('board', board);
+
+      var column = board.map(function(row) {
+        // console.log(row);
+        return row[colIndex];
+      });
+
+      console.log('col', column);
+
+      for ( var i = 0; i < column.length; i++ ) {
+        var value = column[i];
+        if ( value === 1 ) {
+          return true;
+        }
+      }
+      return false;
     },
 
     // test if any columns on this board contain conflicts
     hasAnyColConflicts: function() {
-      return false; // fixme
+      // declare board var equal to calling rows function on this board
+      // create a flag set to false
+      // interate over index positions for each column on board
+      //   call hasColConfAt
+      //   if call of hasCCat is true
+      //   set flag to true
+      // return flag
+
+      var board = this.rows();
+      var result = false;
+      for ( var i = 0; i < board.length; i++ ) {
+        if ( this.hasColConflictAt(i) ) {
+          result = true;
+        }
+      }
+      return result;
     },
 
 
@@ -146,3 +212,15 @@
   };
 
 }());
+
+console.log('TEST ---------- TEST');
+var newBoard = new Board({n: 5});
+newBoard.togglePiece(0, 1);
+newBoard.togglePiece(1, 1);
+console.log(newBoard.rows());
+var input1 = newBoard.hasColConflictAt(0); // false
+var input2 = newBoard.hasColConflictAt(1); // true
+var input3 = newBoard.hasColConflictAt(2); // false
+console.log(input1);
+console.log(input2);
+console.log(input3);
