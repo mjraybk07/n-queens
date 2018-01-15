@@ -187,7 +187,7 @@
 
     // test if a specific major diagonal on this board contains a conflict
     hasMajorDiagonalConflictAt: function(majorDiagonalColumnIndexAtFirstRow) {
-      //console.log(majorDiagonalColumnIndexAtFirstRow);
+      console.log(majorDiagonalColumnIndexAtFirstRow);
       var board = this.rows();
       var counter = 0;
       var columnIndex = 0;
@@ -196,21 +196,32 @@
       var size = this.attributes.n;
       // var limit = size - this._getFirstRowColumnIndexForMajorDiagonalOn(rowIndex, columnIndex);
 
-      if ( majorDiagonalColumnIndexAtFirstRow === 0 ) {
-        for ( var i = 0; i < size; i++ ) {
-          var value = board[rowIndex][columnIndex];
-          diagonal.push(value);
-          columnIndex++;
-          rowIndex++;
-        }
-      }
-      // iterate throught the diagonal
-      //  check for more than one 1
-      // when we find a 1 increment the counter
-      // if counter is greater than 1
-      //  return true
-      // else return false
+      // Handle negative case --------
+      if ( majorDiagonalColumnIndexAtFirstRow < 0 ) {
+      // if argument is less than zero
+      //   subtract 'arg' from rowIndex
+      //   add  'arg' to size
+        rowIndex -= majorDiagonalColumnIndexAtFirstRow;
+        size += majorDiagonalColumnIndexAtFirstRow;
 
+      // Handle positive case ------
+      } else if ( majorDiagonalColumnIndexAtFirstRow > 0 ) {
+      // if argument is greater than zero
+      //   add 'arg' to the column index
+      //   subtract 'arg' from size
+        columnIndex += majorDiagonalColumnIndexAtFirstRow;
+        size -= majorDiagonalColumnIndexAtFirstRow;
+      }
+
+
+      for ( var i = 0; i < size; i++ ) {
+        var value = board[rowIndex][columnIndex];
+        diagonal.push(value);
+        columnIndex++;
+        rowIndex++;
+      }
+
+      console.log(diagonal);
       for ( var i = 0; i < diagonal.length; i++ ) {
         if ( diagonal[i] === 1 ) {
           counter++;
@@ -227,6 +238,17 @@
 
     // test if any major diagonals on this board contain conflicts
     hasAnyMajorDiagonalConflicts: function() {
+      // create size variable set to the length of board
+      // create mdc set to empty array
+      // iterate from neg size to pos size
+      //  push the index to the mjdci
+      // generate array of potential diagonals
+      // iterate through diagonals array
+      //  if call hasMDCAt returns true
+      //    return true
+      // return false
+
+
       return false; // fixme
     },
 
@@ -294,11 +316,13 @@ var input3 = newBoard.hasColConflictAt(2); // false
 //   -- tests for major diagonal at
 var majDiagBoard = new Board ({n: 4});
 console.log(majDiagBoard);
-majDiagBoard.togglePiece(0, 0);
-majDiagBoard.togglePiece(2, 2);
+// majDiagBoard.togglePiece(1, 0);
+// majDiagBoard.togglePiece(2, 1);
+majDiagBoard.togglePiece(1, 0);
+majDiagBoard.togglePiece(2, 1);
 console.log(majDiagBoard.rows());
-var gfrcimd = majDiagBoard._getFirstRowColumnIndexForMajorDiagonalOn(0, 1);
+//var gfrcimd = majDiagBoard._getFirstRowColumnIndexForMajorDiagonalOn(0, 1);
 //console.log(gfrcimd);
-var test = majDiagBoard.hasMajorDiagonalConflictAt(0);
+var test = majDiagBoard.hasMajorDiagonalConflictAt(-1); // true
 console.log('this is the test', test);
 
