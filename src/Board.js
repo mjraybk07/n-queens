@@ -187,7 +187,7 @@
 
     // test if a specific major diagonal on this board contains a conflict
     hasMajorDiagonalConflictAt: function(majorDiagonalColumnIndexAtFirstRow) {
-      console.log(majorDiagonalColumnIndexAtFirstRow);
+      //console.log(majorDiagonalColumnIndexAtFirstRow);
       var board = this.rows();
       var counter = 0;
       var columnIndex = 0;
@@ -233,34 +233,35 @@
       return false;
     },
 
-    //var majorDiagonalColumnIndexAtFirstRow = ??
-    //var allDiagonals = [-3, -2, -1, 0, 1, 2, 3];
+    // var majorDiagonalColumnIndexAtFirstRow = []
+    // var allDiagonals = [-3, -2, -1, 0, 1, 2, 3];
+    // create size variable set to the length of board
+    // create mdc set to empty array
+    // iterate from neg size to pos size
+    //  push the index to the mjdci
+    // generate array of potential diagonals
+    // iterate through diagonals array
+    //  if call hasMDCAt returns true
+    //    return true
+    // return false
 
     // test if any major diagonals on this board contain conflicts
     hasAnyMajorDiagonalConflicts: function() {
-      // create size variable set to the length of board
-      // create mdc set to empty array
-      // iterate from neg size to pos size
-      //  push the index to the mjdci
-      // generate array of potential diagonals
-      // iterate through diagonals array
-      //  if call hasMDCAt returns true
-      //    return true
-      // return false
+      var context = this;
+      var result = false;
       var size = this.attributes.n;
       var majorDiagonalColumnIndexAtFirstRow = [];
 
       for ( var i = -size + 1; i < size; i++ ) {
         majorDiagonalColumnIndexAtFirstRow.push(i);
       }
-      console.log(majorDiagonalColumnIndexAtFirstRow);
 
-      this.majorDiagonalColumnIndexAtFirstRow.forEach(function(num) {
-        if ( this.hasMajorDiagonalConflictAt(num) ) {
-          return true;
+      majorDiagonalColumnIndexAtFirstRow.forEach(function(num) {
+        if ( context.hasMajorDiagonalConflictAt(num) ) {
+          result = true;
         }
       });
-      return false;
+      return result;
     },
 
 
