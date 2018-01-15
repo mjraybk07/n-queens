@@ -144,10 +144,86 @@
     // Major Diagonals - go from top-left to bottom-right
     // --------------------------------------------------------------
     //
+
+    // c - 0  1  2  3
+    // r - 0  1  2  3
+    // x - 0  0  0  0
+
+    // c - 0  1  2
+    // r - 1  2  3
+    // x --1 -1 -1
+
+    // c - 1  2  3
+    // r - 0  1  2
+    // x - 1  1  1
+
+    // c - 2  3
+    // r - 0  1
+    // x - 2  2
+
+    // c - 0  1
+    // r - 2  3
+    // x --2 -2
+
+
+    // set a counter to 0
+    // set column index
+    // set row index
+
+
+    // get all the rows
+    // iterate through the rows starting at the
+    //
+
+    // create an array for the diagonal (TODO)
+
+    // iterate through the diagonal
+    //   if element in diagonal is equal to 1
+    //     increment counter
+    // if counter is greater than 1
+    //   return true
+    // return false
+
+
     // test if a specific major diagonal on this board contains a conflict
     hasMajorDiagonalConflictAt: function(majorDiagonalColumnIndexAtFirstRow) {
-      return false; // fixme
+      //console.log(majorDiagonalColumnIndexAtFirstRow);
+      var board = this.rows();
+      var counter = 0;
+      var columnIndex = 0;
+      var rowIndex = 0;
+      var diagonal = [];
+      var size = this.attributes.n;
+      // var limit = size - this._getFirstRowColumnIndexForMajorDiagonalOn(rowIndex, columnIndex);
+
+      if ( majorDiagonalColumnIndexAtFirstRow === 0 ) {
+        for ( var i = 0; i < size; i++ ) {
+          var value = board[rowIndex][columnIndex];
+          diagonal.push(value);
+          columnIndex++;
+          rowIndex++;
+        }
+      }
+      // iterate throught the diagonal
+      //  check for more than one 1
+      // when we find a 1 increment the counter
+      // if counter is greater than 1
+      //  return true
+      // else return false
+
+      for ( var i = 0; i < diagonal.length; i++ ) {
+        if ( diagonal[i] === 1 ) {
+          counter++;
+        }
+      }
+      if ( counter > 1 ) {
+        return true;
+      }
+      return false;
     },
+
+    //var majorDiagonalColumnIndexAtFirstRow = ??
+    //var allDiagonals = [-3, -2, -1, 0, 1, 2, 3];
 
     // test if any major diagonals on this board contain conflicts
     hasAnyMajorDiagonalConflicts: function() {
@@ -156,7 +232,7 @@
 
 
 
-    // Minor Diagonals - go from top-right to bottom-left
+    // Minor Diagonals - go from top-rig  ht to bottom-left
     // --------------------------------------------------------------
     //
     // test if a specific minor diagonal on this board contains a conflict
@@ -191,14 +267,14 @@ console.log('TEST ---------- TEST');
 
 var testBoard = new Board({n: 5});
 var inputD = testBoard.hasAnyRowConflicts();
-console.log('testBoard.hasAnyRowConflicts()....', inputD); // false
+//console.log('testBoard.hasAnyRowConflicts()....', inputD); // false
 testBoard.togglePiece(0, 1);
 var inputA = testBoard.hasRowConflictAt(0);
 var inputB = testBoard.hasRowConflictAt(1);
 var inputC = testBoard.hasAnyRowConflicts();
-console.log('testBoard.hasRowConflictAt(0)....', inputA); // True
-console.log('testBoard.hasRowConflictAt(1)....', inputB); // False
-console.log('testBoard.hasAnyRowConflicts()....', inputC); // true
+// console.log('testBoard.hasRowConflictAt(0)....', inputA); // True
+// console.log('testBoard.hasRowConflictAt(1)....', inputB); // False
+// console.log('testBoard.hasAnyRowConflicts()....', inputC); // true
 
 
 // -- tests for column conflicts --
@@ -206,13 +282,23 @@ console.log('testBoard.hasAnyRowConflicts()....', inputC); // true
 var newBoard = new Board({n: 5});
 newBoard.togglePiece(0, 1);
 newBoard.togglePiece(1, 1);
-console.log('newBoard', newBoard.rows());
+//console.log('newBoard', newBoard.rows());
 var input1 = newBoard.hasColConflictAt(0); // false
 var input2 = newBoard.hasColConflictAt(1); // true
 var input3 = newBoard.hasColConflictAt(2); // false
-console.log('hasColConflictAt', input1);
-console.log('hasColConflictAt', input2);
-console.log('hasColConflictAt', input3);
-console.log('hasAnyRowConflicts', newBoard.hasAnyRowConflicts());
+// console.log('hasColConflictAt', input1);
+// console.log('hasColConflictAt', input2);
+// console.log('hasColConflictAt', input3);
+// console.log('hasAnyRowConflicts', newBoard.hasAnyRowConflicts());
 
+//   -- tests for major diagonal at
+var majDiagBoard = new Board ({n: 4});
+console.log(majDiagBoard);
+majDiagBoard.togglePiece(0, 0);
+majDiagBoard.togglePiece(2, 2);
+console.log(majDiagBoard.rows());
+var gfrcimd = majDiagBoard._getFirstRowColumnIndexForMajorDiagonalOn(0, 1);
+//console.log(gfrcimd);
+var test = majDiagBoard.hasMajorDiagonalConflictAt(0);
+console.log('this is the test', test);
 
