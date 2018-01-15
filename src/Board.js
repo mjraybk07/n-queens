@@ -221,7 +221,7 @@
         rowIndex++;
       }
 
-      console.log(diagonal);
+      //console.log(diagonal);
       for ( var i = 0; i < diagonal.length; i++ ) {
         if ( diagonal[i] === 1 ) {
           counter++;
@@ -247,9 +247,20 @@
       //  if call hasMDCAt returns true
       //    return true
       // return false
+      var size = this.attributes.n;
+      var majorDiagonalColumnIndexAtFirstRow = [];
 
+      for ( var i = -size + 1; i < size; i++ ) {
+        majorDiagonalColumnIndexAtFirstRow.push(i);
+      }
+      console.log(majorDiagonalColumnIndexAtFirstRow);
 
-      return false; // fixme
+      this.majorDiagonalColumnIndexAtFirstRow.forEach(function(num) {
+        if ( this.hasMajorDiagonalConflictAt(num) ) {
+          return true;
+        }
+      });
+      return false;
     },
 
 
@@ -323,6 +334,8 @@ majDiagBoard.togglePiece(2, 1);
 console.log(majDiagBoard.rows());
 //var gfrcimd = majDiagBoard._getFirstRowColumnIndexForMajorDiagonalOn(0, 1);
 //console.log(gfrcimd);
-var test = majDiagBoard.hasMajorDiagonalConflictAt(-1); // true
-console.log('this is the test', test);
+// var test = majDiagBoard.hasMajorDiagonalConflictAt(-1); // true
+// console.log('this is the test', test);
+var test = majDiagBoard.hasAnyMajorDiagonalConflicts();
+console.log('this is a test', test);
 
