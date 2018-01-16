@@ -13,10 +13,16 @@
 
 // return a matrix (an array of arrays) representing a single nxn chessboard, with n rooks placed such that none of them can attack each other
 
+// i: number
+// o: solution: a single matrix
+// constraint: board size and # of rooks both equal to n
 
-
+// array of arrays of all possible positions for a rook (TBD)
+// there can only be 1 rook per row or no rooks and only 1 rook per column or no rooks.
+//
 window.findNRooksSolution = function(n) {
-  var solution = undefined; //fixme
+
+  var solution = undefined;
 
   console.log('Single solution for ' + n + ' rooks:', JSON.stringify(solution));
   return solution;
