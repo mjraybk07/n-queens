@@ -264,19 +264,143 @@
       return result;
     },
 
+    // 4x4
+    // size = 4
+    // minorDiagonals = [0, 1, 2, 3, 4, 5, 6]
+    // middle = 3
+    // (middle is size - 1)
+
+    // 5x5
+    // size = 5
+    // minorDiagonals = [0, 1, 2, 3, 4, 5, 6, 7, 8];
+    // middle = 4
+    // (middle is size - 1)
+
+    // must handle cases
+    //   middle
+    //   left
+    //   right
+
+    // create board
+    // create counter
+    // set size variable to attrubute n
+    // set middle variable to size less one
+    // set column variable equal to middle
+    // set row variable equal to middle
+    // create diagonal array
+
+    // --- less than middle case --
+    // if minor diagonal column index at first row is less than middle
+    //   decrement column index
+    //   decrement size by one
+
+    // -- greater than middle case --
+    // if minor diagonal column index at first row is greater than middle
+    //   increment row index
+    //   decrement size by one
+
+    // -- middle case  --
+
+    // -- collect nums into diagonal --
+    // iterate through diagonal array
+    // declare a value variable equal to the board at location rowIndex and columnIndex
+    //   push value into diagonal array
+    //   decrement column index
+    // increment row index
+
+    //  -- check for conflicts in diagonal array  --
+    //  iterate through diagonal array
+    //    if element is equal to 1
+    //      increment to counter
+
+    // if counter is greater than one
+    //   return true
+    // return false
 
 
-    // Minor Diagonals - go from top-rig  ht to bottom-left
+
+    // Minor Diagonals - go from top-right to bottom-left
     // --------------------------------------------------------------
     //
     // test if a specific minor diagonal on this board contains a conflict
     hasMinorDiagonalConflictAt: function(minorDiagonalColumnIndexAtFirstRow) {
-      return false; // fixme
+
+      var board = this.rows();
+      var counter = 0;
+      var size = this.attributes.n;
+      var limit = size;
+      var middle = size - 1;
+      var context = this;
+      var rowIndex = 0;
+      var columnIndex = middle;
+      var diagonal = [];
+
+      // --- less than middle case --
+      if ( minorDiagonalColumnIndexAtFirstRow < middle ) {
+        columnIndex = minorDiagonalColumnIndexAtFirstRow;
+        limit = minorDiagonalColumnIndexAtFirstRow + 1;
+
+      // -- greater than middle case --
+      } else if ( minorDiagonalColumnIndexAtFirstRow > middle ) {
+        rowIndex += minorDiagonalColumnIndexAtFirstRow - middle;
+        limit -= rowIndex;
+      }
+
+      // -- middle case  --
+      // -- collect nums into diagonal --
+      for ( var j = 0; j < limit; j++ ) {
+        var value = board[rowIndex][columnIndex];
+        diagonal.push(value);
+        columnIndex--;
+        rowIndex++;
+      }
+
+      //  -- check for conflicts in diagonal array  --
+      for ( var i = 0; i < diagonal.length; i++ ) {
+        if ( diagonal[i] === 1 ) {
+          counter++;
+        }
+      }
+
+      if ( counter > 1 ) {
+        return true;
+      }
+      return false;
     },
+
+    // variables
+    // context
+    // result
+    // size
+    // limit
+    // minordiagonalcolumnindexatfirstrow set to empty array
+
+    // iterate over length of possible indexes
+    //  push index to mda
+    // iterate over diagarray
+    //  if calling hasMDCAt on each is true
+    //    set result to true
+    // return result
 
     // test if any minor diagonals on this board contain conflicts
     hasAnyMinorDiagonalConflicts: function() {
-      return false; // fixme
+
+      var result = false;
+      var context = this;
+      var size = context.attributes.n;
+      var limit = (size - 1) + (size - 1);
+      var minorDiagonalColumnIndexAtFirstRow = [];
+
+      for (var i = 0; i <= limit; i++) {
+        minorDiagonalColumnIndexAtFirstRow.push(i);
+      }
+
+      minorDiagonalColumnIndexAtFirstRow.forEach(function(num) {
+        if (context.hasMinorDiagonalConflictAt(num)) {
+          result = true;
+        }
+      });
+      return result;
     }
 
     /*--------------------  End of Helper Functions  ---------------------*/
@@ -295,17 +419,17 @@
 }());
 
 // ----------------- TESTS -----------------
-console.log('TEST ---------- TEST');
+console.log('--------TEST ---------- TEST---------');
 
 //  -- test for row conflicts --
 
-var testBoard = new Board({n: 5});
-var inputD = testBoard.hasAnyRowConflicts();
-//console.log('testBoard.hasAnyRowConflicts()....', inputD); // false
-testBoard.togglePiece(0, 1);
-var inputA = testBoard.hasRowConflictAt(0);
-var inputB = testBoard.hasRowConflictAt(1);
-var inputC = testBoard.hasAnyRowConflicts();
+// var testBoard = new Board({n: 5});
+// var inputD = testBoard.hasAnyRowConflicts();
+// //console.log('testBoard.hasAnyRowConflicts()....', inputD); // false
+// testBoard.togglePiece(0, 1);
+// var inputA = testBoard.hasRowConflictAt(0);
+// var inputB = testBoard.hasRowConflictAt(1);
+// var inputC = testBoard.hasAnyRowConflicts();
 // console.log('testBoard.hasRowConflictAt(0)....', inputA); // True
 // console.log('testBoard.hasRowConflictAt(1)....', inputB); // False
 // console.log('testBoard.hasAnyRowConflicts()....', inputC); // true
@@ -313,30 +437,55 @@ var inputC = testBoard.hasAnyRowConflicts();
 
 // -- tests for column conflicts --
 
-var newBoard = new Board({n: 5});
-newBoard.togglePiece(0, 1);
-newBoard.togglePiece(1, 1);
-//console.log('newBoard', newBoard.rows());
-var input1 = newBoard.hasColConflictAt(0); // false
-var input2 = newBoard.hasColConflictAt(1); // true
-var input3 = newBoard.hasColConflictAt(2); // false
-// console.log('hasColConflictAt', input1);
-// console.log('hasColConflictAt', input2);
-// console.log('hasColConflictAt', input3);
-// console.log('hasAnyRowConflicts', newBoard.hasAnyRowConflicts());
+// var newBoard = new Board({n: 5});
+// newBoard.togglePiece(0, 1);
+// newBoard.togglePiece(1, 1);
+// //console.log('newBoard', newBoard.rows());
+// var input1 = newBoard.hasColConflictAt(0); // false
+// var input2 = newBoard.hasColConflictAt(1); // true
+// var input3 = newBoard.hasColConflictAt(2); // false
+// // console.log('hasColConflictAt', input1);
+// // console.log('hasColConflictAt', input2);
+// // console.log('hasColConflictAt', input3);
+// // console.log('hasAnyRowConflicts', newBoard.hasAnyRowConflicts());
 
-//   -- tests for major diagonal at
-var majDiagBoard = new Board ({n: 4});
-console.log(majDiagBoard);
+// //   -- tests for major diagonal at
+// var majDiagBoard = new Board ({n: 4});
+// //console.log(majDiagBoard);
+// // majDiagBoard.togglePiece(1, 0);
+// // majDiagBoard.togglePiece(2, 1);
 // majDiagBoard.togglePiece(1, 0);
 // majDiagBoard.togglePiece(2, 1);
-majDiagBoard.togglePiece(1, 0);
-majDiagBoard.togglePiece(2, 1);
-console.log(majDiagBoard.rows());
-//var gfrcimd = majDiagBoard._getFirstRowColumnIndexForMajorDiagonalOn(0, 1);
-//console.log(gfrcimd);
-// var test = majDiagBoard.hasMajorDiagonalConflictAt(-1); // true
-// console.log('this is the test', test);
-var test = majDiagBoard.hasAnyMajorDiagonalConflicts();
-console.log('this is a test', test);
+// //console.log(majDiagBoard.rows());
+// //var gfrcimd = majDiagBoard._getFirstRowColumnIndexForMajorDiagonalOn(0, 1);
+// //console.log(gfrcimd);
+// // var test = majDiagBoard.hasMajorDiagonalConflictAt(-1); // true
+// // console.log('this is the test', test);
+// var test = majDiagBoard.hasAnyMajorDiagonalConflicts();
+// //console.log('this is a test', test);
+
+// //   -- test for minor diagonal ad
+// var testMinor = new Board ({n: 4});
+// testMinor.togglePiece(0, 3);
+// testMinor.togglePiece(2, 1);
+// // console.log('testMinor rows: ', testMinor.rows());
+// var test2 = testMinor.hasMinorDiagonalConflictAt(3);
+// // console.log('...testMinor.hasMinorDiagonalConflictAt(3): ', test2); // true
+
+// //  -- test for minor diag any
+// var test3 = testMinor.hasAnyMinorDiagonalConflicts();
+// // console.log('...testMinor.hasAnyMinorDiagonalConflicts: ', test3); // true
+
+// var newMinor = new Board ({n: 4});
+// newMinor.togglePiece(2, 3);
+// newMinor.togglePiece(3, 2);
+// console.log('newMinor rows: ', newMinor.rows());
+
+// var test4 = newMinor.hasMinorDiagonalConflictAt(5);
+// console.log('...newMinor.hasMinorDiagonalConflictAt(5): ', test4); // true
+
+
+
+console.log('------------- END TEST -----------------');
+
 
