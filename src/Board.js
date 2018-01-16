@@ -419,7 +419,7 @@
 }());
 
 // ----------------- TESTS -----------------
-console.log('--------TEST ---------- TEST---------');
+//console.log('--------TEST ---------- TEST---------');
 
 //  -- test for row conflicts --
 
@@ -486,6 +486,6 @@ console.log('--------TEST ---------- TEST---------');
 
 
 
-console.log('------------- END TEST -----------------');
+//console.log('------------- END TEST -----------------');
 
 
