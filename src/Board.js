@@ -421,6 +421,7 @@
 // ----------------- TESTS -----------------
 //console.log('--------TEST ---------- TEST---------');
 
+
 //  -- test for row conflicts --
 
 // var testBoard = new Board({n: 5});
